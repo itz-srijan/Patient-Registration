@@ -5,7 +5,7 @@ interface Patient {
   firstname: string;
   lastname?: string;
   age: number;
-  DOB: string;
+  dob: string;
   gender: string;
   contact: string;
   email?: string;
@@ -13,6 +13,7 @@ interface Patient {
 }
 
 export default function PatientLists({ patients }: { patients: Patient[] }) {
+  console.log(patients);
   return (
     <div className='bg-white p-6 rounded-xl shadow-md mt-8'>
       <h2 className='text-2xl font-semibold text-gray-800 mb-4'>

@@ -4,13 +4,15 @@ import { useState } from "react";
 import ConfirmModal from "@/components/ConfirmModal";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deletePatientById } from "@/lib/delete";
+import EditModal from "@/components/EditModal";
+import { updatePatientById } from "@/lib/update";
 
 interface Patient {
   id?: number;
   firstname: string;
   lastname?: string;
   age: number;
-  DOB: string;
+  dob: string;
   gender: string;
   contact: string;
   email?: string;
@@ -19,7 +21,7 @@ interface Patient {
 
 interface DetailsProps {
   results: Patient[];
-  setResults: (results: Patient[]) => void;
+  setResults: React.Dispatch<React.SetStateAction<Patient[]>>;
 }
 
 export default function Details({ results, setResults }: DetailsProps) {
@@ -29,11 +31,17 @@ export default function Details({ results, setResults }: DetailsProps) {
     null
   );
 
+  const [editOpen, setEditOpen] = useState(false);
+  const [
+    selectedPatientData,
+    setSelectedPatientData,
+  ] = useState<Patient | null>(null);
+
   const openModal = (id: number) => {
     setSelectedPatientID(id);
     setOpen(true);
   };
-
+  console.log(results);
   return (
     <div className='min-h-screen bg-gray-100 py-10 px-4'>
       <h1 className='text-3xl font-bold text-center mb-6 text-gray-800'>
@@ -49,6 +57,36 @@ export default function Details({ results, setResults }: DetailsProps) {
           setOpen(false);
         }}
         message={`Are you sure you want to delete patient with ID: ${selectedPatientId}?`}
+      />
+
+      <EditModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        existingData={{
+          contact: selectedPatientData?.contact || "",
+          address: selectedPatientData?.address || "",
+          DOB: selectedPatientData?.dob || "",
+        }}
+        onSave={async (updatedFields) => {
+          if (!selectedPatientData?.id) return;
+
+          const updatedPatient = {
+            ...selectedPatientData,
+            ...updatedFields,
+          };
+
+          await updatePatientById(selectedPatientData.id, updatedFields);
+
+          setResults((prevResults) =>
+            prevResults.map((patient) =>
+              patient.id === selectedPatientId
+                ? { ...patient, ...updatedFields }
+                : patient
+            )
+          );
+
+          setEditOpen(false);
+        }}
       />
 
       {results.length === 0 ? (
@@ -71,7 +109,13 @@ export default function Details({ results, setResults }: DetailsProps) {
                   >
                     <MdDelete size={24} />
                   </button>
-                  <button className='pb-2 cursor-pointer text-blue-500 hover:text-blue-700'>
+                  <button
+                    onClick={() => {
+                      setSelectedPatientData(patient);
+                      setEditOpen(true);
+                    }}
+                    className='pb-2 cursor-pointer text-blue-500 hover:text-blue-700'
+                  >
                     <MdEdit size={24} />
                   </button>
                 </div>
@@ -80,6 +124,18 @@ export default function Details({ results, setResults }: DetailsProps) {
               <p className='text-gray-700 mb-1'>
                 <span className='font-medium'>ID:</span> {patient.id}
               </p>
+
+              <p className='text-gray-700 mb-1'>
+                <span className='font-medium'>Date of Birth:</span>{" "}
+                {patient.dob
+                  ? new Date(patient.dob.trim()).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "N/A"}
+              </p>
+
               <p className='text-gray-700 mb-1'>
                 <span className='font-medium'>Age:</span> {patient.age}
               </p>

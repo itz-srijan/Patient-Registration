@@ -5,7 +5,7 @@ interface Patient {
   firstname: string;
   lastname?: string;
   age: number;
-  DOB: string;
+  dob: string;
   gender: string;
   contact: string;
   email?: string;

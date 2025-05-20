@@ -22,13 +22,18 @@ export default function PatientForm({ onSubmitSuccess }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const db = await getDb();
+
+    const today = new Date();
+    const dob = new Date(form.DOB);
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
     await db.exec(`
-      INSERT INTO patients (firstname, lastname, age, DOB, address, email, gender, contact)
-      VALUES ('${form.firstname}', '${form.lastname}', ${parseInt(
-      form.age
-    )}, '${form.DOB}', '${form.address}', '${form.email}', '${form.gender}', '${
-      form.contact
-    }');
+      INSERT INTO patients (firstname, lastname, DOB, age, address, email, gender, contact)
+      VALUES ('${form.firstname}', '${form.lastname}', '${form.DOB}','${age}', '${form.address}', '${form.email}', '${form.gender}', '${form.contact}');
     `);
     setForm({
       firstname: "",
@@ -80,19 +85,6 @@ export default function PatientForm({ onSubmitSuccess }: Props) {
           />
         </div>
 
-        {/* Age */}
-        <div>
-          <label className='block text-sm font-medium mb-1'>Age</label>
-          <input
-            type='number'
-            className='w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none'
-            placeholder='30'
-            required
-            value={form.age}
-            onChange={(e) => setForm({ ...form, age: e.target.value })}
-          />
-        </div>
-
         {/* DOB */}
         <div>
           <label className='block text-sm font-medium mb-1'>
@@ -104,6 +96,32 @@ export default function PatientForm({ onSubmitSuccess }: Props) {
             required
             value={form.DOB}
             onChange={(e) => setForm({ ...form, DOB: e.target.value })}
+          />
+        </div>
+
+        {/* Age */}
+        <div>
+          <label className='block text-sm font-medium mb-1'>Age</label>
+          <input
+            type='number'
+            className='w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-100'
+            placeholder='Age'
+            value={
+              form.DOB
+                ? (() => {
+                    const today = new Date();
+                    const dob = new Date(form.DOB);
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const m = today.getMonth() - dob.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                      age--;
+                    }
+                    return age > 0 ? age : "";
+                  })()
+                : ""
+            }
+            readOnly
+            tabIndex={-1}
           />
         </div>
 
