@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
-import Search from "./Search";
-import Details from "./Details";
+import Search from "@/app/patientdetails/Search";
+import Details from "@/app/patientdetails/Details";
 
 interface Patient {
   id?: number;
