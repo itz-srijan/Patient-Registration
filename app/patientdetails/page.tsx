@@ -24,7 +24,7 @@ export default function PatientDetails() {
       <Navbar />
       <div className='p-4 flex flex-row gap-4 min-h-screen bg-gray-100'>
         <Search results={results} setResults={setResults} />
-        <Details results={results} />
+        <Details results={results}/>
       </div>
     </>
   );

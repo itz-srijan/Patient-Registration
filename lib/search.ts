@@ -18,11 +18,8 @@ export const searchPatients = async (
   lastname: string,
   mobileNum: string
 ): Promise<Patient[]> => {
-  const { getDb } = await import("./db"); // ✅ Import dynamically in client
+  const { getDb } = await import("./db"); 
   const db = await getDb();
-  console.log(db);
-  console.log(typeof db);
-  console.log(db.exec);
 
   const conditions: string[] = [];
 

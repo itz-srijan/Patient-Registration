@@ -1,4 +1,3 @@
-// components/ConfirmModal.tsx
 "use client";
 
 interface ConfirmModalProps {
@@ -17,7 +16,7 @@ export default function ConfirmModal({
   if (!open) return null;
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30'>
+    <div className='fixed inset-0 flex items-center bg-blue-100/50 justify-center shadow-sky-300 z-50 bg-opacity-30'>
       <div className='bg-white rounded-lg shadow-xl p-6 max-w-sm w-full'>
         <h2 className='text-lg font-semibold mb-4 text-gray-800'>{message}</h2>
         <div className='flex justify-end gap-3'>

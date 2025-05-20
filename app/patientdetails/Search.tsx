@@ -98,21 +98,10 @@ export default function Search({setResults }: SearchProps) {
 
         <button
           onClick={handleSearch}
-          className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold'
+          className='w-full cursor-pointer bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold'
         >
           Search
         </button>
-
-        {/* 
-                <PatientTable patients={results} onEdit={handleEditClick} />
-                {editingPatient && (
-                  <PatientForm
-                    patient={editingPatient}
-                    onSave={handleSave}
-                    onCancel={() => setEditingPatient(null)}
-                  />
-                )}
-              */}
       </div>
     </div>
   );
