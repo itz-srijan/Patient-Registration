@@ -4,6 +4,15 @@ A frontend-only patient management application built with **Next.js App Router**
 
 ---
 
+## 🧩 Tech Stack
+
+- [Next.js 14+ (App Router)](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [PGlite (SQLite in browser)](https://electric-sql.com/docs/pglite)
+- [TypeScript](https://www.typescriptlang.org/)
+
+---
+
 ## ✨ Features
 
 - ✅ **Add Patient** – Register new patients with all relevant details like name, age, gender, contact info, etc.
@@ -15,12 +24,24 @@ A frontend-only patient management application built with **Next.js App Router**
 
 ---
 
-## 🧩 Tech Stack
+## 🧗 Challenges Faced During Development
 
-- [Next.js 14+ (App Router)](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [PGlite (SQLite in browser)](https://electric-sql.com/docs/pglite)
-- [TypeScript](https://www.typescriptlang.org/)
+### Tab Synchronization Issue
+
+Initially, I used `localStorage` along with the `storage` event to synchronize patient data across multiple browser tabs. However, this approach had a significant limitation:
+
+- The `storage` event does **not trigger in the same tab** where the data is modified.
+- This led to **inconsistent state updates**, especially when multiple tabs were open.
+
+### ✅ Solution – BroadcastChannel API
+
+To address this, I implemented the `BroadcastChannel` API.
+
+- It enables **real-time communication between all browser contexts** (tabs, windows, iframes) of the same origin.
+- Using this, I broadcasted a message whenever patient data was added or updated.
+- Other open tabs listen for this broadcast and re-fetch the data accordingly.
+
+This ensured **smooth and consistent data synchronization** across all tabs without any race conditions or stale data issues.
 
 ---
 
@@ -31,3 +52,4 @@ A frontend-only patient management application built with **Next.js App Router**
 ```bash
 git clone https://github.com/itz-srijan/Patient-Registration.git
 cd Patient-Registration
+```
