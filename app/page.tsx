@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getDb,initDb } from "@/lib/db";
+import { getDb, initDb } from "@/lib/db";
 import PatientForm from "@/components/PatientForm";
-import PatientLists from "@/components/PatientLists";
+import PatientLists from "@/components/PatientList";
 import Navbar from "@/components/Navbar";
 
 interface Patient {
