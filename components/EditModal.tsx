@@ -7,12 +7,12 @@ interface EditModalProps {
   onSave: (updatedData: {
     contact: string;
     address: string;
-    DOB: string;
+    dob: string;
   }) => void;
   existingData: {
     contact: string;
     address: string;
-    DOB: string;
+    dob: string;
   };
 }
 
@@ -24,13 +24,13 @@ export default function EditModal({
 }: EditModalProps) {
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
-  const [DOB, setDOB] = useState("");
+  const [dob, setDob] = useState("");
 
   useEffect(() => {
     if (open) {
       setContact(existingData.contact);
       setAddress(existingData.address);
-      setDOB(existingData.DOB);
+      setDob(existingData.dob);
     }
   }, [open, existingData]);
 
@@ -60,8 +60,8 @@ export default function EditModal({
           <label className='block font-medium mb-1'>Date of Birth</label>
           <input
             type='date'
-            value={DOB}
-            onChange={(e) => setDOB(e.target.value)}
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
             className='w-full border rounded px-3 py-2'
           />
         </div>
@@ -74,7 +74,7 @@ export default function EditModal({
             Cancel
           </button>
           <button
-            onClick={() => onSave({ contact, address, DOB })}
+            onClick={() => onSave({ contact, address, dob })}
             className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'
           >
             Save

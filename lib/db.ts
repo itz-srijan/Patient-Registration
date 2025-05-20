@@ -23,7 +23,7 @@ export async function initDb() {
       id SERIAL PRIMARY KEY,
       firstname TEXT NOT NULL,
       lastname TEXT,
-      DOB TEXT NOT NULL,
+      dob TEXT NOT NULL,
       age INTEGER,
       address TEXT NOT NULL,
       email TEXT,

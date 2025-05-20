@@ -65,16 +65,10 @@ export default function Details({ results, setResults }: DetailsProps) {
         existingData={{
           contact: selectedPatientData?.contact || "",
           address: selectedPatientData?.address || "",
-          DOB: selectedPatientData?.dob || "",
+          dob: selectedPatientData?.dob || "",
         }}
         onSave={async (updatedFields) => {
           if (!selectedPatientData?.id) return;
-
-          const updatedPatient = {
-            ...selectedPatientData,
-            ...updatedFields,
-          };
-
           await updatePatientById(selectedPatientData.id, updatedFields);
 
           setResults((prevResults) =>
