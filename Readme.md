@@ -17,6 +17,8 @@ A frontend-only patient management application built with **Next.js App Router**
 
 - ✅ **Add Patient** – Register new patients with all relevant details like name, age, gender, contact info, etc.
 - 🔍 **Search Patient** – Search by ID, first name, last name, or mobile number using SQL queries.
+- ✏️ **Update Patient** – Edit existing patient details directly from the patient Deatil view.
+- 🗑️ **Delete Patient** – Remove patient records securely with confirmation prompts.
 - 💾 **Local Data Persistence** – All patient data is saved in the browser via PGlite (IndexedDB), even after page refresh, also works in different tabs synchronously.
 - 🧠 **Smart Query Builder** – Dynamically builds SQL `WHERE` clauses based on input fields.
 - ⚡ **Fast & Offline** – Works offline after initial load; no backend or API required.
