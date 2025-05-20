@@ -19,9 +19,11 @@ interface Patient {
 
 interface DetailsProps {
   results: Patient[];
+  setResults: (results: Patient[]) => void;
 }
 
-export default function Details({ results }: DetailsProps) {
+export default function Details({ results, setResults }: DetailsProps) {
+  // const [patientData, setPatientData] = useState<Patient[]>(results);
   const [open, setOpen] = useState(false);
   const [selectedPatientId, setSelectedPatientID] = useState<number | null>(
     null
@@ -43,6 +45,7 @@ export default function Details({ results }: DetailsProps) {
         onCancel={() => setOpen(false)}
         onConfirm={() => {
           deletePatientById(selectedPatientId!);
+          setResults(results.filter((p) => p.id !== selectedPatientId));
           setOpen(false);
         }}
         message={`Are you sure you want to delete patient with ID: ${selectedPatientId}?`}
